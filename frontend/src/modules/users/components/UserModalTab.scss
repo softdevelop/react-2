@@ -1,0 +1,25 @@
+.user-modal-tab {
+  display: flex;
+  flex-direction: row;
+
+  .tab {
+    width: 100%;
+    border: 1px solid black;
+    background: transparent;
+    outline: none;
+    padding: 15px;
+    font-size: 15px;
+    cursor: pointer;
+
+    &:nth-child(2) {
+      border-left: none;
+      border-right: none;
+    }
+
+    &-active {
+      background-color: rgb(2, 149, 194);
+      color: white;
+      font-size: 20px;
+    }
+  }
+}
