@@ -1,0 +1,62 @@
+{
+  "name": "nodejs-temp-mvc",
+  "author": "tpvhub",
+  "main": "server.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development nodemon server.js",
+    "prod:local": "NODE_ENV=production node server.js",
+    "db:migrate": "yarn db:backup && node ./database/migrations/index.js",
+    "db:backup": "node ./database/backups/backup.js",
+    "db:restore": "node ./database/backups/restore.js",
+    "pre:commit": "bash ./scripts/pre-commit.sh",
+    "test": ""
+  },
+  "dependencies": {
+    "@hapi/joi": "^15.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "cron": "^1.7.0",
+    "dotenv": "^7.0.0",
+    "ejs": "^2.6.1",
+    "express": "4.15.2",
+    "express-compile-sass": "^4.0.0",
+    "express-ejs-extend": "^0.0.1",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.19",
+    "multer": "^1.4.1",
+    "node-sass": "^4.12.0",
+    "nodemailer": "^5.1.1",
+    "rand-token": "^0.4.0",
+    "shelljs": "^0.8.3",
+    "socket.io": "^2.2.0"
+  },
+  "_moduleAliases": {
+    "@bootstrap": "./bootstrap",
+    "@controllers": "./app/controllers",
+    "@cronjobs": "./app/cronjobs",
+    "@middleware": "./app/middleware",
+    "@models": "./app/models",
+    "@services": "./app/services",
+    "@socket": "./app/socket",
+    "@config": "./config",
+    "@constants": "./constants",
+    "@database": "./database",
+    "@routes": "./routes",
+    "@third-parties": "./third-parties",
+    "@utils": "./utils"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.18.10"
+  }
+}

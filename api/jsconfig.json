@@ -1,0 +1,51 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "allowSyntheticDefaultImports": false,
+        "baseUrl": "./",
+        "paths": {
+            "@bootstrap": [
+                "./bootstrap/*"
+            ],
+            "@controllers": [
+                "./app/controllers/*"
+            ],
+            "@cronjobs": [
+                "./app/cronjobs/*"
+            ],
+            "@middleware": [
+                "./app/middleware/*"
+            ],
+            "@models": [
+                "./app/models/*"
+            ],
+            "@services": [
+                "./app/services/*"
+            ],
+            "@socket": [
+                "./app/socket/*"
+            ],
+            "@config": [
+                "./config/*"
+            ],
+            "@constants": [
+                "./constants/*"
+            ],
+            "@database": [
+                "./database/*"
+            ],
+            "@routes": [
+                "./routes/*"
+            ],
+            "@third-parties": [
+                "./third-parties/*"
+            ],
+            "@utils": [
+                "./utils/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
