@@ -1,3 +1,4 @@
 module.exports = {
-    oauth: require('./oauth')
+    oauth: require('./oauth'),
+    results: require('./results')
 }

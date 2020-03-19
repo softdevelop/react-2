@@ -26,4 +26,9 @@ router.get('/send-mail', (req, res) => {
     })
 })
 
+router.get('/a', (req, res) => {
+  res.send('Users')
+})
+
+
 module.exports = router

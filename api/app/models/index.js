@@ -1,5 +1,6 @@
 module.exports = [
     'users',
     'categories',
-    'tokens'
+    'tokens',
+    'results'
 ]
