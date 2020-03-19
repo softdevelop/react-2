@@ -9,7 +9,7 @@ $primary: rgb(63, 164, 223);
     color: $primary;
     background-color: transparent;
     font-size: 20px;
-    padding: 15px;
+    padding: 5px 15px;
     outline: none;
     cursor: pointer;
 
@@ -46,10 +46,32 @@ $primary: rgb(63, 164, 223);
 .results-table {
   .title {
   }
+  #edit, #delete{
+    padding: 5px;
+    border: 0;
+    cursor: pointer;
+  }
+  #edit{
+    margin-right: 4px;
+    background: greenyellow;
+    &:hover{
+      background: rgb(121, 180, 32);
+    }
+  }
+  #delete{
+    background: orange;
+    &:hover{
+      background: rgb(180, 137, 28)
+    }
+  }
 }
-
 
 #results td:first-child, #results th:first-child {
   width: 150px;
   word-break: break-all;
+}
+
+#results td:last-child, #results th:last-child {
+  text-align: center;
+  width: 150px;
 }

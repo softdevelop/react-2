@@ -150,6 +150,38 @@ function ResultModal() {
     }
   }, [tab])
 
+  const renderCell = (input, formValues) => {
+    switch (input.name) {
+      case "Status":
+        return (
+          <select onChange={onChangeInput} name={input.name} value={formValues[input.name]}>
+            {
+              status.map(item=>{
+              return <option key={item} value={item}>{item}</option>
+              })
+            }
+          </select>
+        )
+      case "Findings":
+        return (
+          <textarea onChange={onChangeInput} name={input.name}>
+            {JSON.stringify(formValues[input.name])}
+          </textarea>
+        )
+      default:
+        return (
+          <input
+            value={formValues[input.name]}
+            name={input.name}
+            placeholder={input.placeholder}
+            type={input.type}
+            onChange={onChangeInput}
+            required
+          />
+        )
+    }
+  }
+
   return (
     <div className="result-modal">
       <div
@@ -170,22 +202,7 @@ function ResultModal() {
             />
             <div className="field">
               {
-                input.name === 'Status' ? 
-                <select onChange={onChangeInput} name={input.name} value={formValues[input.name]}>
-                  {
-                    status.map(item=>{
-                    return <option key={item} value={item}>{item}</option>
-                    })
-                  }
-                </select> : 
-                <input
-                  value={(typeof formValues[input.name] === 'object')?JSON.stringify(formValues[input.name]):formValues[input.name]}
-                  name={input.name}
-                  placeholder={input.placeholder}
-                  type={input.type}
-                  onChange={onChangeInput}
-                  required
-                />
+                renderCell(input, formValues)  
               }
             </div>
             <div className="control">

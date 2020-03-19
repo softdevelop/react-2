@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import ResultsContext from "../context/ResultsContext";
-
+import ReactJson from 'react-json-view'
 import "./ResultsTable.scss";
 
 function ResultsTable(props) {
@@ -44,13 +44,15 @@ function ResultsTable(props) {
                 <td>{byId[id]._id}</td>
                 <td>{byId[id].Status}</td>
                 <td>{byId[id].RepositoryName}</td>
-                <td>{JSON.stringify(byId[id].Findings)}</td>
+                <td>
+                  <ReactJson collapsed src={(byId[id].Findings)} />
+                </td>
                 <td>{byId[id].QueuedAt}</td>
                 <td>{byId[id].ScanningAt}</td>
                 <td>{byId[id].FinishedAt}</td>
                 <td>
-                  <button onClick={onClickEditResult(id)}>Edit</button>
-                  <button onClick={onClickDeleteResult(id)}>Delete</button>
+                  <button id="edit" onClick={onClickEditResult(id)}>Edit</button>
+                  <button id="delete" onClick={onClickDeleteResult(id)}>Delete</button>
                 </td>
               </tr>
             ))}
