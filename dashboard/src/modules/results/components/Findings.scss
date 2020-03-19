@@ -20,22 +20,22 @@ $primary: rgb(63, 164, 223);
   }
 }
 
-#results {
+#findings {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#results td, #results th {
+#findings td, #findings th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#results tr:nth-child(even){background-color: #f2f2f2;}
+#findings tr:nth-child(even){background-color: #f2f2f2;}
 
-#results tr:hover {background-color: #ddd;}
+#findings tr:hover {background-color: #ddd;}
 
-#results th {
+#findings th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -43,7 +43,7 @@ $primary: rgb(63, 164, 223);
   color: white;
 }
 
-.results-table {
+.findings-table {
   .title {
   }
   #edit, #delete, #view{
@@ -73,12 +73,12 @@ $primary: rgb(63, 164, 223);
   }
 }
 
-#results td:first-child, #results th:first-child {
+#findings td:first-child, #findings th:first-child {
   width: 150px;
   word-break: break-all;
 }
 
-#results td:last-child, #results th:last-child {
+#findings td:last-child, #findings th:last-child {
   text-align: center;
   width: 150px;
 }

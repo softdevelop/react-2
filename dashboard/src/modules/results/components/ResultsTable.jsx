@@ -1,17 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  withRouter
+} from "react-router-dom";
 
 import ResultsContext from "../context/ResultsContext";
 import ReactJson from 'react-json-view'
 import "./ResultsTable.scss";
 
 function ResultsTable(props) {
-  const { byId, allIds, onAddRecord, onEditResult, deleteResult } = React.useContext(
+  const { byId, allIds, onEditResult, deleteResult } = React.useContext(
     ResultsContext
   );
 
   const onClickEditResult = id => () => {
     onEditResult(id);
+    props.history.push('results/'+id);
+  };
+
+  const onClickViewResult = id => () => {
+    onEditResult(id);
+    props.history.push('results/view/'+id);
   };
 
   const onClickDeleteResult = id => () => {
@@ -21,10 +34,9 @@ function ResultsTable(props) {
   return (
     <div>
       <div className="add-record">
-        <button onClick={onAddRecord}>Add record</button>
+        <Link to="/"><button>Add record</button></Link>
       </div>
       <div className="results-table">
-        <h4 className="title">Results</h4>
         <table id="results">
           <thead>
             <tr>
@@ -51,6 +63,7 @@ function ResultsTable(props) {
                 <td>{byId[id].ScanningAt}</td>
                 <td>{byId[id].FinishedAt}</td>
                 <td>
+                  <button id="view" onClick={onClickViewResult(id)}>View</button>
                   <button id="edit" onClick={onClickEditResult(id)}>Edit</button>
                   <button id="delete" onClick={onClickDeleteResult(id)}>Delete</button>
                 </td>
@@ -67,4 +80,4 @@ ResultsTable.propTypes = {};
 
 ResultsTable.defaultProps = {};
 
-export default ResultsTable;
+export default withRouter(ResultsTable);

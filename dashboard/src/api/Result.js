@@ -9,6 +9,12 @@ const rest = reduxApi({
       method: "GET"
     }
   },
+  getById: {
+    url: "results/:id",
+    options: {
+      method: "GET"
+    }
+  },
   edit: {
     url: "results/:id",
     options: {

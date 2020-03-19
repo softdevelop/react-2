@@ -1,7 +1,5 @@
 import React from "react";
 import ResultsContext from "./ResultsContext";
-import { v4 as uuid } from "uuid";
-
 import { cacheState, parseCachedState } from '../../../utils/cache';
 import { Result } from "../../../api";
 
@@ -12,7 +10,8 @@ const initState = parseCachedState(reducerKey) || {
   appState: {
     isOpenModal: false,
     modalType: "add",
-    resultEditting: {}
+    resultEditting: {},
+    resultViewing: null
   }
 };
 
@@ -25,7 +24,8 @@ function ResultReducer(state, action) {
           ...state.appState,
           isOpenModal: true,
           modalType: action.payload.type,
-          resultEditting: state.byId[action.payload.id]
+          resultEditting: state.byId[action.payload.id],
+          resultViewing: null
         }
       };
     }
@@ -35,7 +35,8 @@ function ResultReducer(state, action) {
         ...state,
         appState: {
           ...state.appState,
-          isOpenModal: false
+          isOpenModal: false,
+          resultViewing: null
         }
       };
     }
@@ -63,6 +64,12 @@ function ResultReducer(state, action) {
         byId: {
           ...state.byId,
           [result._id]: result
+        },
+        appState: {
+          isOpenModal: false,
+          modalType: "add",
+          resultEditting: {},
+          resultViewing: null
         }
       };
     }
@@ -86,6 +93,16 @@ function ResultReducer(state, action) {
         allIds: action.payload.map(item=>item._id),
         byId
       }
+    }
+
+    case 'GET_RESULT_BY_ID': {
+      return {
+        ...state,
+        appState: {
+          ...state.appState,
+          resultViewing: action.payload
+        }
+      };
     }
 
     default:
@@ -125,13 +142,30 @@ function ResultsProvider(props) {
   }, [dispatch]);
 
   const addNewResult = React.useCallback(
-    result => {
+    (result, cb) => {
       Result.actions.add.request({}, { data: result})
       .then(response => {
         dispatch({
           type: "ADD_NEW_RESULT",
           payload: response.data.data
         });
+        cb()
+      })
+      .catch(err => {
+      });
+    },
+    [dispatch]
+  );
+
+  const getResultById = React.useCallback(
+    (id, cb) => {
+      Result.actions.getById.request({id})
+      .then(response => {
+        dispatch({
+          type: "GET_RESULT_BY_ID",
+          payload: response.data.data
+        });
+        cb()
       })
       .catch(err => {
       });
@@ -140,14 +174,18 @@ function ResultsProvider(props) {
   );
 
   const editResult = React.useCallback(
-    result => {
+    (result, cb) => {
       let id = result._id;
-      Result.actions.edit.request({id}, { data: result})
+      let data = result;
+      if(typeof data.Findings === 'object')
+      data.Findings = JSON.stringify(data.Findings)
+      Result.actions.edit.request({id}, { data })
       .then(response => {
         dispatch({
           type: "EDIT_RESULT",
           payload: result
         });
+        cb();
       })
       .catch(err => {
       });
@@ -179,6 +217,7 @@ function ResultsProvider(props) {
       addNewResult,
       onEditResult,
       editResult,
+      getResultById,
       deleteResult
     }),
     [resultsReducer, onAddRecord]
@@ -187,9 +226,7 @@ function ResultsProvider(props) {
   React.useEffect(() => {
     cacheState(reducerKey)(resultsReducer);
   }, [resultsReducer])
-
   React.useEffect(() => {
-    // mount
     Result.actions.get.request()
       .then(response => {
         dispatch({
@@ -199,9 +236,6 @@ function ResultsProvider(props) {
       })
       .catch(err => {
     });
-    // return () => {
-    //   // unmount
-    // }
   }, [])
 
   return (

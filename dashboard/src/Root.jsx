@@ -1,9 +1,12 @@
 import React from 'react';
 
-// modules
-import { UsersProvider, UsersTable, UserModal } from './modules/users';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
-import { ResultsProvider, ResultsTable, ResultModal } from './modules/results';
+import { ResultsProvider, ResultsTable, ResultModal, ResultForm, Findings } from './modules/results';
 
 import './Root.scss';
 
@@ -11,8 +14,22 @@ function Root() {
   return (
     <div className="root-app">
       <ResultsProvider>
-        <ResultsTable />
-        <ResultModal />
+        <Router>
+            <Switch>
+              <Route exact path="/results">
+                <ResultsTable />
+              </Route>
+              <Route exact path="/results/view/:id">
+                <Findings />
+              </Route>
+              <Route exact path="/results/:id">
+                <ResultForm />
+              </Route>
+              <Route exact path="/">
+                <ResultForm />
+              </Route>
+            </Switch>
+        </Router>
       </ResultsProvider>
     </div>
   )
