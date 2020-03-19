@@ -33,6 +33,21 @@ const get = (req, res) => {
         })
 }
 
+const getById = (req, res) => {
+    let id = req.params.id
+    results.getById(id)
+        .then(data => {
+            sendData(res, {
+                data
+            })
+        })
+        .catch(err => {
+            sendError(res, {
+                errors: err
+            })
+        })
+}
+
 const edit = (req, res) => {
     let id = req.params.id
     let data = req.body
@@ -68,5 +83,6 @@ module.exports = {
     add,
     get,
     edit,
+    getById,
     deleteRecord
 }

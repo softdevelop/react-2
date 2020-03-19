@@ -3,6 +3,8 @@ const results = require('@controllers/api/results')
 
 router.get('/', results.get)
 
+router.get('/:id', results.getById)
+
 router.post('/', results.add)
 
 router.put('/:id', results.edit)

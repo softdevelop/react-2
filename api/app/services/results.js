@@ -36,6 +36,17 @@ const edit = (id, data) => {
     })
 }
 
+const getById = (id) => {
+    return new Promise((resolve, reject) => {
+        Result.findById(id).then(doc => {
+            if (doc == null) throw new Error('Result not found')
+            resolve(doc)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
 const deleteRecord = (id) => {
     return new Promise((resolve, reject) => {
         Result.find({ _id: id }).remove().then(doc => {
@@ -48,11 +59,9 @@ const deleteRecord = (id) => {
 }
 
 module.exports = {
-    getResultById: (userId) => {
-        return Result.findById(userId).then(user => user || Promise.reject(new Error('user not found')))
-    },
     add,
     get,
     edit,
+    getById,
     deleteRecord
 }
