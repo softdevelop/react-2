@@ -16,9 +16,11 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "prop-types": "^15.6.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "redux-api": "^0.12.0",
     "uuid": "^7.0.2"
   },
   "devDependencies": {
