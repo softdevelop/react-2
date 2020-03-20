@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  app:
+    image: pscd-api
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+    links:
+      - mongodb
+    
+  mongodb:
+    image: mongo
+    networks:
+      - app-network
+  
+  frontend:
+    image: pscd-frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+    
