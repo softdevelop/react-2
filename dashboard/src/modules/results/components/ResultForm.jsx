@@ -16,7 +16,7 @@ const timeStamp = {
 
 function ResultForm(props){
   const formRef = React.useRef();
-  const { appState, addNewResult, editResult, onCloseModal, onEditResult, allIds } = React.useContext(ResultsContext);
+  const { appState, addNewResult, editResult, onCloseModal, onEditResult, allIds, onAddRecord } = React.useContext(ResultsContext);
   const [formValues, setFormValues] = React.useState(
     appState.modalType === "add"
       ? {
@@ -93,6 +93,11 @@ function ResultForm(props){
     });
   };
 
+  const onCancel = () => {
+    onAddRecord();
+    props.history.push('/results');
+  }
+
   return (
     <div className="result-form">
       <form ref={formRef} onSubmit={onSubmitForm}>
@@ -129,7 +134,7 @@ function ResultForm(props){
           <input type="text" name="TimeStamp" onChange={onChangeInput} required value={formValues.TimeStamp}/>
         </div>
         <div className="form-action">
-          <Link to="/results"><button id="cancel" >Cancel</button></Link>
+          <button id="cancel" onClick={()=>onCancel()}>Cancel</button>
           <button id="save" type="submit">Save</button>
         </div>
       </form>
