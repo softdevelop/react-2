@@ -23,25 +23,29 @@ function ResultForm(props){
           Status: status[0],
           RepositoryName: "",
           Findings: '',
+          FindingsStr: '',
           TimeStamp: (new Date()).getTime()
         }
       : {
         ...appState.resultEditting,
-        TimeStamp: appState.resultEditting && appState.resultEditting[timeStamp[appState.resultEditting.Status]]
+        TimeStamp: appState.resultEditting && appState.resultEditting[timeStamp[appState.resultEditting.Status]],
+        FindingsStr: appState.resultEditting && JSON.stringify(appState.resultEditting.Findings)
       }
   );
 
   React.useEffect(() => {
-    if(allIds.length>0) {
+    if(allIds.length>0 && props.match.params && props.match.params.id) {
       onEditResult(props.match.params.id)
     }
   }, [allIds])
 
   React.useEffect(() => {
-    if(appState.resultEditting){
+    if(appState.resultEditting && props.match.params && props.match.params.id){
       setFormValues({
         ...appState.resultEditting,
-        TimeStamp: appState.resultEditting && appState.resultEditting[timeStamp[appState.resultEditting.Status]]
+        TimeStamp: appState.resultEditting && appState.resultEditting[timeStamp[appState.resultEditting.Status]],
+        FindingsStr: appState.resultEditting && JSON.stringify(appState.resultEditting.Findings)
+
       })
     }
   }, [appState.resultEditting])
@@ -50,7 +54,7 @@ function ResultForm(props){
     e.preventDefault();
     if (formValues.Status 
       && formValues.RepositoryName 
-      && formValues.Findings
+      && formValues.FindingsStr
       && formValues.TimeStamp
       ) {
       if (appState.modalType === 'edit') {
@@ -60,6 +64,8 @@ function ResultForm(props){
         delete data.FinishedAt;
         data[timeStamp[data.Status]] = data.TimeStamp;
         delete data.TimeStamp;
+        data.Findings = data.FindingsStr;
+        delete data.FindingsStr;
         editResult(data, ()=>{
           props.history.push('/results');
         })
@@ -71,6 +77,8 @@ function ResultForm(props){
         delete data.FinishedAt;
         data[timeStamp[data.Status]] = data.TimeStamp;
         delete data.TimeStamp;
+        data.Findings = data.FindingsStr;
+        delete data.FindingsStr;
         addNewResult(data, ()=>{
           props.history.push('/results');
         })
@@ -110,9 +118,9 @@ function ResultForm(props){
           <label>Findings</label>
           <textarea 
             onChange={onChangeInput} 
-            name="Findings"
+            name="FindingsStr"
             required
-            value={JSON.stringify(formValues.Findings)}
+            value={formValues.FindingsStr}
           >
           </textarea>
         </div>
